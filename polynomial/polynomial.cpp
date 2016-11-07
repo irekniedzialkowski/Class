@@ -6,16 +6,19 @@ using namespace std;
 polynomial::polynomial(int n)
 {
     this->degree=n;
-    this->coefficient.resize(n+1);
+    this->coefficient=new double [n+1];
+}
+polynomial::~polynomial()
+{
+    delete [] this->coefficient;
 }
 polynomial::polynomial(const polynomial &A)
 {
     this->degree=A.degree;
-    this->coefficient.resize(A.degree+1);
+    this->coefficient=new double[degree +1];
     for(int i=0; i<degree;++i)
         coefficient[i]=A.coefficient[i];
 }
-
 void polynomial::load()
 {
     for(int i=degree; i>=0;--i)
@@ -42,19 +45,27 @@ void polynomial::write()
     cout<<endl;
 }
 
-void polynomial::add(polynomial &A)
+polynomial polynomial::operator+(polynomial &A)
 {
-	int maximum= max(degree,A.degree);
-    int minimum = min(degree,A.degree);
- 	this->coefficient.resize(maximum+1);
+	int maximum= max(this->degree,A.degree);
+    int minimum = min(this->degree,A.degree);
+    polynomial C(maximum);
+    for(int i=0; i<=minimum;++i)
+    C.coefficient[i]+=this->coefficient[i]+A.coefficient[i];
  	if(degree<A.degree)
     {
-        for(int i=0;i<=maximum;++i)
-        coefficient[i]+=A.coefficient[i];
+        for(int i=minimum+1;i<=maximum;++i)
+        C.coefficient[i]+=A.coefficient[i];
     }
-    else for(int i=0; i<=minimum; ++i)
+    else for(int i=minimum+1; i<=maximum; ++i)
     {
-        coefficient[i]+=A.coefficient[i];
+        C.coefficient[i]+=this->coefficient[i];
     }
+    if(maximum>this->degree)
+    {
     this->degree=maximum;
+    delete [] this->coefficient;
+    this->coefficient=new double[maximum+1];
+    }
+    return C;
 }

@@ -5,12 +5,13 @@ using namespace std;
 class polynomial
 {
     int degree;
-    vector <double> coefficient; //I am using vector, because I can later expand the size of the array
+    double *coefficient;
     public:
     polynomial(int);
     polynomial(const polynomial&);
+    ~polynomial();
     void load();
     void write();
-    void add(polynomial&);
+    polynomial operator+(polynomial&);
 };
 #endif
