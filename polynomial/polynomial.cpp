@@ -45,7 +45,7 @@ void polynomial::write()
     cout<<endl;
 }
 
-polynomial polynomial::operator+(polynomial &A)
+/*polynomial polynomial::operator+(polynomial &A)
 {
 	int maximum= max(this->degree,A.degree);
     int minimum = min(this->degree,A.degree);
@@ -61,11 +61,47 @@ polynomial polynomial::operator+(polynomial &A)
     {
         C.coefficient[i]+=this->coefficient[i];
     }
-    if(maximum>this->degree)
-    {
     this->degree=maximum;
     delete [] this->coefficient;
     this->coefficient=new double[maximum+1];
-    }
     return C;
+}*/
+polynomial polynomial::operator+(polynomial &A)
+{
+     polynomial *W, *M;
+     if(degree>A.degree)
+     {
+          W=this;
+          M=&A;
+     }
+     else
+     {
+          W=&A;
+          M=this;
+     }
+     polynomial S(W->degree);
+     int i=0;
+     while(i<=M->degree+1)
+          S.coefficient[i]=W->coefficient[i]+M->coefficient[i++];
+     while(i<W->degree+1)
+          S.coefficient[i]=W->coefficient[i++];
+     return S;
+}
+polynomial& polynomial::operator=(const polynomial &A)
+{
+     if(degree==A.degree)
+     {
+          for(int i=degree;i>-1;--i)
+               coefficient[i]=A.coefficient[i];
+     }
+     else
+     {
+          delete [] coefficient;
+          this->degree=A.degree;
+          this->coefficient=new double [degree+1];
+          for(int i=0;i<=A.degree;++i)
+               coefficient[i]=A.coefficient[i];
+
+     }
+     return *this;
 }

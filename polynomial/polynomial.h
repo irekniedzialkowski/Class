@@ -13,5 +13,6 @@ class polynomial
     void load();
     void write();
     polynomial operator+(polynomial&);
+    polynomial& operator=(const polynomial&);
 };
 #endif

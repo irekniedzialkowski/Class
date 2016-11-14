@@ -7,10 +7,11 @@ using namespace std;
 
 int main()
 {
-    polynomial  a(6), b(3);
+    polynomial  a(6), b(3),c(3);
+    c.load();
     b.load();
     a.load();
-    b=b+a;
-    b.write();
+    a=b=b+a+c;
+    a.write();
 }
 
