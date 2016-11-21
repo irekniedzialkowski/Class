@@ -5,7 +5,7 @@ using namespace std;
 class polynomial
 {
     int degree;
-    vector <double> coefficient; //I am using vector, because I can later expand the size of the array
+    vector<double> coefficient; //I am using vector, because I can later expand the size of the array
     public:
     polynomial(int);
     polynomial(const polynomial&);
