@@ -26,5 +26,6 @@ Person::Person(){
 	this.sex = getSex();
 	this.login = getLogin();
 	this.password = getPassword();
+	this.birth = getDate();
 }
 #endif
