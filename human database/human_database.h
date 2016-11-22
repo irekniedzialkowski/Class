@@ -1,12 +1,9 @@
 #ifndef HUMAN_DATABASE
 #define HUMAN_DATABASE
 #include "side_functions.h"
+#include "date.h"
 
-struct date{
-	unsigned short day;
-	unsigned short month;
-	unsigned short year;
-};
+using std::string;
 
 class Person{
 	string first_name;
@@ -19,13 +16,13 @@ public:
 	Person();
 };
 
-
 Person::Person(){
-	this.first_name = getFirstName();
-	this.last_name = getLastName();
-	this.sex = getSex();
-	this.login = getLogin();
-	this.password = getPassword();
-	this.birth = getDate();
+	first_name = getFirstName();
+	last_name = getLastName();
+	sex = getSex();
+	login = getLogin();
+	password = getPassword();
+	birth = getDate();
 }
+
 #endif
