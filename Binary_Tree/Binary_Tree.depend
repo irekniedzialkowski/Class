@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1480032990 source:c:\users\asus-pc\documents\binary_tree\binary_tree.cpp
+	<iostream>
+	"Binary_Tree.h"
+
+1480032628 source:c:\users\asus-pc\documents\binary_tree\main.cpp
+	<iostream>
+	"Binary_Tree.h"
+
+1480033004 c:\users\asus-pc\documents\binary_tree\binary_tree.h
+	<iostream>
+
