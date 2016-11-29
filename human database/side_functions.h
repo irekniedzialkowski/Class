@@ -124,8 +124,7 @@ date getDate(){
 		check = 0;
 		cout << "Month (MM): ";
 		cin >> myDate.month;
-		if(myDate.year == YEAR)
-			if(myDate.month > MONTH) check =1;
+		if(myDate.year == YEAR && myDate.month > MONTH) check =1;
 		else if(myDate.month < 1 || myDate.month > 12) check = 1;
 		if(check) cout << "Wrong month!\n";
 	}while(check);
