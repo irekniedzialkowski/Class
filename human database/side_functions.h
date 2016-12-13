@@ -3,10 +3,9 @@
 #include <iostream>
 #include <cctype>
 #include <string>
-#include <vector>
 #include <termios.h>
 #include <unistd.h>
-#include "date.h"
+#include "human_object.h"
 // http://okolovich.info/convert-__date__-to-unsigned-int/
 #define YEAR ((((__DATE__ [7] - '0') * 10 + (__DATE__ [8] - '0')) * 10 \
               + (__DATE__ [9] - '0')) * 10 + (__DATE__ [10] - '0'))
@@ -55,102 +54,94 @@ void ShowStdinKeystrokes(){
 }
 
 
-string getFirstName(){
-	string first_name;
+void getFirstName(istream &in, Person &human){
 	cout << "Please input first name: ";
-	cin >> first_name;
-	first_name[0] = toupper(first_name[0]);
-	for(int i=1; i<first_name.size(); ++i) first_name[i] = tolower(first_name[i]);
-	return first_name;
+	in >> human.first_name;
+	human.first_name[0] = toupper(human.first_name[0]);
+	for(int i=1; i<human.first_name.size(); ++i) human.first_name[i] = tolower(human.first_name[i]);
 }
 
-string getLastName(){
-	string last_name;
+void getLastName(istream &in, Person &human){
 	cout << "Please input last name: ";
-	cin >> last_name;
-	last_name[0] = toupper(last_name[0]);
-	for(int i=1; i<last_name.size(); ++i) last_name[i] = tolower(last_name[i]);
-	return last_name;
+	in >> human.last_name;
+	human.last_name[0] = toupper(human.last_name[0]);
+	for(int i=1; i<human.last_name.size(); ++i) human.last_name[i] = tolower(human.last_name[i]);
 }
 
-char getSex(){
-	char ch;
+void getSex(istream &in, Person &human){
 	short check;
+	char x;
 	do{
 		check = 0;
-		cout << "PLease input type of sex (M/F): ";
-		cin >> ch;
-		ch = toupper(ch);
-		if(ch != 'M' && ch != 'F'){
+		cout << "Please input type of sex (M/F): ";
+		in >> x;
+		x = toupper(x);
+		if(x != 'M' && x != 'F'){
 			cout << "Error! I haven't detected M or F...\n";
 			check = 1;
 		}
 	}while(check);
-	return ch;
+	human.sex = x;
 }
 
-string getLogin(){
-	string login;
+void getLogin(istream &in, Person &human){
 	cout << "Please type in your login: ";
-	cin >> login;
-	return login;
+	in >> human.login;
 }
 
-string getPassword(){
-	string password;
+void getPassword(istream &in, Person &human){
 	cout << "Please type in your password: ";
 	HideStdinKeystrokes();
-	cin >> password;
+	in >> human.password;
 	ShowStdinKeystrokes();
-	return password;
-
 }
 
-date getDate(){
-	date myDate;
+void getDate(istream &in, Person &human){
 	short check;
+	unsigned short number;
 	cout << "\nPlease input birth date: \n";
 	do{
 		check = 0;
 		cout << "Year (YYYY): ";
-		cin >> myDate.year;
-		if(myDate.year < 1900 || myDate.year > YEAR){
+		in >> number;
+		if(number < 1900 || number > YEAR){
 			cout << "Wrong year!\n";
 			check = 1;
 		}
 	}while(check);
+	human.birth.year = number;
 
 	do{
 		check = 0;
 		cout << "Month (MM): ";
-		cin >> myDate.month;
-		if(myDate.year == YEAR && myDate.month > MONTH) check =1;
-		else if(myDate.month < 1 || myDate.month > 12) check = 1;
+		in >> number;
+		if(human.birth.year == YEAR && number > MONTH) check =1;
+		else if(number < 1 || number > 12) check = 1;
 		if(check) cout << "Wrong month!\n";
 	}while(check);
+	human.birth.month = number;
 
 	do{
 		check = 0;
 		cout << "Day (DD): ";
-		cin >> myDate.day;
-		if(myDate.year == YEAR && myDate.month == MONTH)
-			if(myDate.day > DAY) check = 1;
-		else if(myDate.day < 1 || myDate.day > 31) check = 1;
-		else switch(myDate.month){
+		in >> number;
+		if(human.birth.year == YEAR && human.birth.month == MONTH)
+			if(number > DAY) check = 1;
+		else if(number < 1 || number > 31) check = 1;
+		else switch(human.birth.month){
 			case 4:
 			case 6:
 			case 9:
 			case 11:
-				if(myDate.day == 31) check = 1;
+				if(number == 31) check = 1;
 				break;
 			case 2:
-				if(myDate.day > 29) check = 1;
-				if(!leapYear(myDate.year) && myDate.day == 29) check = 1;
+				if(number > 29) check = 1;
+				if(!leapYear(human.birth.year) && number == 29) check = 1;
 				break;
 			}
 		if(check) cout << "Wrong day!\n";
 	}while(check);
-
-	return myDate;
+	human.birth.day = number;
 }
 #endif

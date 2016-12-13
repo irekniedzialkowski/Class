@@ -1,18 +1,25 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "human_database.h"
+#include "human_operator.h"
+#include "human_object.h"
+#include "list.h"
 
 using namespace std;
 
 main(){
 	Person A;
-	cout << A;
+	cin >> A;
+	cout << "\nYou have typed in following data:\n" << A;
+	listOD database;
 	fstream myFile;
 	string directory;
 	cout << "\nPlease type in the directory of a file to save output: ";
 	cin >> directory;
 	myFile.open(directory,ios::out);
 	if(myFile.is_open()) myFile << A;
+	myFile.close();
+	myFile.open(directory,ios::in);
+	if(myFile.is_open()) database.append(A);
 	myFile.close();
 }
