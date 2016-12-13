@@ -17,6 +17,10 @@ public:
 	listOD();
 	~listOD();
 	listEL* append(Person&);
+	listEL* search(string&);
+	class spectralPointer{
+
+	};
 	friend ostream& operator<<(ostream&, listOD&);
 };
 
