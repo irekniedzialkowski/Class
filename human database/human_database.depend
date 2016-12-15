@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1479929973 source:d:\git\class\human_database-windows\main.cpp
+	<iostream>
+	<fstream>
+	"human_database.h"
+
+1479838334 d:\git\class\human_database-windows\human_database.h
+	<iostream>
+
+1479929596 source:d:\git\class\human_database-windows\side_functions.cpp
+	<cctype>
+	<string>
+	<iostream>
+	"human_database.h"
+
