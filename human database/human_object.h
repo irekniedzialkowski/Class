@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 using namespace std;
-class date;
 
 class Person{
 	string first_name;
@@ -26,5 +25,6 @@ public:
 	friend void getLogin(istream&, Person&);
 	friend void getPassword(istream&, Person&);
 	friend void getDate(istream&, Person&);
+	friend class listOD;
 };
 #endif

@@ -4,6 +4,7 @@
 #include <iostream>
 #include "human_operator.h"
 #include "human_object.h"
+#include "side_functions.h"
 using namespace std;
 class listOD{
 	class listEL{
@@ -15,13 +16,14 @@ class listOD{
 	listEL *head;
 public:
 	listOD();
+	listEL* checkLogin(string);
+	int checkPassword(string, listEL*);
+	void loginFun();
 	~listOD();
 	listEL* append(Person&);
 	listEL* search(string&);
-	class spectralPointer{
-
-	};
 	friend ostream& operator<<(ostream&, listOD&);
+	friend istream& operator>>(istream&, listOD&);
 };
 
 listOD::listEL::listEL(){
@@ -45,7 +47,7 @@ listOD::~listOD(){
 	delete head;
 }
 
-listOD::listEL* listOD::append(Person &pattern){
+listOD::listEL* listOD::append(Person &pattern){  //for indirect input (though created file)
 	listEL *newel = new listEL;
 	newel->value = pattern;
 	newel->next = head->next;
@@ -60,6 +62,19 @@ ostream& operator<<(ostream &out, listOD &element){
 		help = help->next;
 	}
 	return out;
+}
+
+istream& operator>>(istream &in, listOD &element){  //for direct input (through the console)
+	listOD::listEL *newel = new listOD::listEL;
+	getFirstName(in, newel->value);
+	getLastName(in, newel->value);
+	getSex(in, newel->value);
+	getLogin(in, newel->value);
+	getPassword(in, newel->value);
+	getDate(in, newel->value);
+	newel->next = element.head->next;
+	element.head->next = newel;
+	return in;
 }
 
 #endif
