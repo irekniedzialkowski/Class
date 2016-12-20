@@ -9,8 +9,10 @@ listOD::listEL* listOD::checkLogin(string loginCheck){
 	listEL *pointhelp = head->next;
 	do{
 		if(pointhelp->value.login == loginCheck) return pointhelp;
+
 		pointhelp = pointhelp->next;
 	}while(pointhelp);
+	cout << "Login incorrect!\n";
 	return NULL;
 }
 
@@ -20,25 +22,24 @@ int listOD::checkPassword(string password, listEL *pointer){
 	return 0;
 }
 
-void listOD::loginFun(){
+bool listOD::loginFun(){
 	string login, password;
 	listEL *pointer;
-	cout << "\nType in your login: ";
-	cin >> login;
-	if(!(pointer = checkLogin(login))){
-		cout << "Login not existing in database.\n";
+	do{
+		cout << "\nType in your login: ";
+		cin >> login;
+	}while(!(pointer = checkLogin(login)));
+	cout << "Type in your password: ";
+	HideStdinKeystrokes();
+	cin >> password;
+	ShowStdinKeystrokes();
+	if(!checkPassword(password, pointer)){
+		cout << "Incorrect password!\n";
+		return true;
 	}
 	else{
-		cout << "Type in your password: ";
-		HideStdinKeystrokes();
-		cin >> password;
-		ShowStdinKeystrokes();
-		if(!checkPassword(password, pointer)){
-			cout << "Incorrect password!\n";
-		}
-		else{
-			cout << "\nAccess granted. Welcome " << pointer->value.first_name << "." << endl;
-		}
+		cout << "\nAccess granted. Welcome " << pointer->value.first_name << "." << endl;
+		return false;
 	}
 }
 #endif

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cctype>
 #include "human_operator.h"
 #include "human_object.h"
 #include "list.h"
@@ -9,22 +10,28 @@
 using namespace std;
 
 main(){
+	bool login;
 	Person A;
-	cin >> A;
-	cout << "\nYou have typed in following data:\n" << A;
+	char check = 'N';
 	listOD database;
 	/*fstream myFile;
 	string directory;
 	cout << "\nPlease type in the directory of a file to save output: ";
-	cin >> directory;
-	myFile.open(directory,ios::out);
-	if(myFile.is_open()) myFile << A;
-	myFile.close();
-	myFile.open(directory,ios::in);
-	if(myFile.is_open()) database.append(A);
-	myFile.close();*/
-	cout << "Insert the data into your database: \n";
-	cin >> database;
-	cout << "\nYour database overview: \n" << database;
-	database.loginFun();
+	cin >> directory;*/
+	do{
+		cin >> A;
+		/*if(myFile.is_open()) myFile << A;
+		myFile.close();
+		myFile.open(directory,ios::in);*/
+		database.append(A);
+		do{
+			cout << "Register another person? (Y/N): ";
+			cin >> check;
+			check = toupper(check);
+		}while(check != 'Y' && check != 'N');
+	}while(check == 'Y');
+	//myFile.close();
+	do{
+		login = database.loginFun();
+	}while(login);
 }

@@ -18,7 +18,7 @@ public:
 	listOD();
 	listEL* checkLogin(string);
 	int checkPassword(string, listEL*);
-	void loginFun();
+	bool loginFun();
 	~listOD();
 	listEL* append(Person&);
 	listEL* search(string&);
@@ -47,7 +47,7 @@ listOD::~listOD(){
 	delete head;
 }
 
-listOD::listEL* listOD::append(Person &pattern){  //for indirect input (though created file)
+listOD::listEL* listOD::append(Person &pattern){  //for indirect input (with Person object ready)
 	listEL *newel = new listEL;
 	newel->value = pattern;
 	newel->next = head->next;
@@ -55,7 +55,7 @@ listOD::listEL* listOD::append(Person &pattern){  //for indirect input (though c
 	return newel;
 }
 
-ostream& operator<<(ostream &out, listOD &element){
+ostream& operator<<(ostream &out, listOD &element){ //output - whole list
 	listOD::listEL *help = element.head->next;
 	while(help){
 		out << help->value;
