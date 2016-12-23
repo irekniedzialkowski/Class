@@ -12,26 +12,42 @@ using namespace std;
 main(){
 	bool login;
 	Person A;
-	char check = 'N';
+	char check = 'N', ch;
 	listOD database;
-	/*fstream myFile;
+	fstream myFile;
 	string directory;
-	cout << "\nPlease type in the directory of a file to save output: ";
-	cin >> directory;*/
-	do{
-		cin >> A;
-		/*if(myFile.is_open()) myFile << A;
-		myFile.close();
-		myFile.open(directory,ios::in);*/
-		database.append(A);
+	cout << "\nPlease type in the directory of your file (to save output or/and to load data from it): ";
+	cin >> directory;
+	myFile.open(directory, ios::out);
+	myFile.close();
+	myFile.open(directory, ios::out | ios::in);
+	if(myFile.is_open()){
+		myFile.get(ch);
+		if(myFile.eof()){
+			myFile.seekp(0, ios_base::beg);
+			myFile.seekg(-1, ios_base::cur);
+			myFile >> A;
+			database.append(A);
+		}
+		else{
+			myFile.seekp(0, ios_base::end);
+			myFile.seekg(0, ios_base::beg);
+			database.load(myFile);
+		}
 		do{
-			cout << "Register another person? (Y/N): ";
-			cin >> check;
-			check = toupper(check);
-		}while(check != 'Y' && check != 'N');
-	}while(check == 'Y');
-	//myFile.close();
-	do{
-		login = database.loginFun();
-	}while(login);
+			do{
+				cout << "Register another person? (Y/N): ";
+				cin >> check;
+				check = toupper(check);
+			}while(check != 'Y' && check != 'N');
+			if(check == 'N') break;
+			myFile >> A;
+			database.append(A);
+		}while(true);
+		myFile.close();
+		do{
+			login = database.loginFun();
+		}while(login);
+	}
+	else cout << "\nCannot open the file!!!";
 }

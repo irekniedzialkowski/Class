@@ -8,12 +8,12 @@
 using namespace std;
 
 ostream& operator<<(ostream &out, Person &human){
-	out << "First Name: " << human.first_name << endl <<
-	"Last Name: " << human.last_name << endl <<
-	"Sex: " << human.sex << endl <<
-	"Login: " << human.login << endl <<
-	"Password: PROTECTED" << endl <<
-	"Date: " << human.birth.day << '.' << human.birth.month << '.' << human.birth.year << endl;
+	out << human.first_name << endl <<
+	human.last_name << endl <<
+	human.sex << endl <<
+	human.login << endl <<
+	human.password << endl <<
+	human.birth.day << endl << human.birth.month << endl << human.birth.year << endl;
 	return out;
 }
 
