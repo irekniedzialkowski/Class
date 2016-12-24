@@ -1,4 +1,4 @@
-WARNING: This program was written in Linux. Therefore it contains libraries (e.g. unistd.h) used ONLY in Linux.
+WARNING: This program was written in Linux. Therefore it contains libraries (e.g. unistd.h) used ONLY under Linux systems.
 
 Here I have created a Person class containing some data.
 
