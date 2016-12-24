@@ -16,10 +16,20 @@ listOD::listEL* listOD::checkLogin(string loginCheck){
 	return NULL;
 }
 
-int listOD::checkPassword(string password, listEL *pointer){
+bool listOD::checkPassword(string password, listEL *pointer){
 	if(pointer)
-		if(pointer->value.password == password) return 1;
-	return 0;
+		if(pointer->value.password == password) return true;
+	return false;
+}
+
+bool listOD::uniqueLoginCheck(string &loginToCheck){
+	listEL *pointhelp = new listEL;
+	pointhelp = head->next;
+	while(pointhelp){
+		if(pointhelp->value.login == loginToCheck) return true;
+		else pointhelp = pointhelp->next;
+	}
+	return false;
 }
 
 bool listOD::loginFun(){

@@ -11,8 +11,9 @@ using namespace std;
 
 main(){
 	bool login;
-	Person A; //my person class object
+	Person A; //my person class object with a pointer to it
 	char check = 'N', ch;
+	bool boolcheck;
 	listOD database; //my list class list
 	fstream myFile;
 	string directory;
@@ -26,7 +27,7 @@ main(){
 		if(myFile.eof()){
 			myFile.close(); //file is empty
 			myFile.open(directory, fstream::app);
-			cin >> A; //obligatory registering a person
+			cin >> A; //obligatory registering a person			
 			myFile << A;
 			database.append(A);
 			myFile.close();
@@ -46,7 +47,14 @@ main(){
 				check = toupper(check);
 			}while(check != 'Y' && check != 'N');
 			if(check == 'N') break;
-			cin >> A;
+			do{
+				boolcheck = false;
+				cin >> A;
+				if(database.uniqueLoginCheck(A.getLogin())){
+					boolcheck = true;
+					cout << "\nThe login is already taken. Please input the information again.\n\n";
+				}
+			}while(boolcheck); //checking whether login is already existing
 			myFile << A;
 			database.append(A);
 		}while(true);

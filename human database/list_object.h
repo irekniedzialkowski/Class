@@ -17,8 +17,9 @@ class listOD{
 public:
 	listOD();
 	listEL* checkLogin(string);
-	int checkPassword(string, listEL*);
+	bool checkPassword(string, listEL*);
 	bool loginFun();
+	bool uniqueLoginCheck(string&);
 	~listOD();
 	listEL* append(Person&);
 	listEL* append();

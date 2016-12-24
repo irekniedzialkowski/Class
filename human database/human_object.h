@@ -26,5 +26,10 @@ public:
 	friend void getPassword(istream&, Person&);
 	friend void getDate(istream&, Person&);
 	friend class listOD;
+	string& getLogin();
 };
+
+string& Person::getLogin(){
+	return login;
+}
 #endif
