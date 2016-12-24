@@ -1,10 +1,9 @@
 #ifndef HUMAN_OPERATOR
 #define HUMAN_OPERATOR
-#include "side_functions.h"
-#include "human_object.h"
 #include <iostream>
 #include <fstream>
-
+#include "side_functions.h"
+#include "human_object.h"
 using namespace std;
 
 ostream& operator<<(ostream &out, Person &human){

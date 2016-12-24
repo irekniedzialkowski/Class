@@ -2,38 +2,43 @@
 #include <fstream>
 #include <string>
 #include <cctype>
+#include <unistd.h>
 #include "human_operator.h"
 #include "human_object.h"
-#include "list.h"
-#include "list_side_functions.h"
-
+#include "list_object.h"
+#include "list_login.h"
 using namespace std;
 
 main(){
 	bool login;
-	Person A;
+	Person A; //my person class object
 	char check = 'N', ch;
-	listOD database;
+	listOD database; //my list class list
 	fstream myFile;
 	string directory;
 	cout << "\nPlease type in the directory of your file (to save output or/and to load data from it): ";
 	cin >> directory;
-	myFile.open(directory, ios::out);
-	myFile.close();
-	myFile.open(directory, ios::out | ios::in);
+	myFile.open(directory, fstream::app); //creating the file if not existing or just opening it
 	if(myFile.is_open()){
-		myFile.get(ch);
+		myFile.close();
+		myFile.open(directory, ios::in);
+		myFile >> ch;
 		if(myFile.eof()){
-			myFile.seekp(0, ios_base::beg);
-			myFile.seekg(-1, ios_base::cur);
-			myFile >> A;
+			myFile.close(); //file is empty
+			myFile.open(directory, fstream::app);
+			cin >> A; //obligatory registering a person
+			myFile << A;
 			database.append(A);
+			myFile.close();
 		}
 		else{
-			myFile.seekp(0, ios_base::end);
-			myFile.seekg(0, ios_base::beg);
-			database.load(myFile);
+			myFile.close(); //file is not empty
+			cout << "\nLoading data...\n";
+			usleep(3000000); //wait 3 seconds (from <unistd.h> library)
+			database.load(myFile, directory);
+			cout << "Loaded.\n";
 		}
+		myFile.open(directory, fstream::app);
 		do{
 			do{
 				cout << "Register another person? (Y/N): ";
@@ -41,12 +46,13 @@ main(){
 				check = toupper(check);
 			}while(check != 'Y' && check != 'N');
 			if(check == 'N') break;
-			myFile >> A;
+			cin >> A;
+			myFile << A;
 			database.append(A);
 		}while(true);
 		myFile.close();
 		do{
-			login = database.loginFun();
+			login = database.loginFun(); //LOGIN function
 		}while(login);
 	}
 	else cout << "\nCannot open the file!!!";

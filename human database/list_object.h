@@ -1,12 +1,11 @@
-#ifndef LIST_H
-#define LIST_H
-#include <string>
-#include <iostream>
+#ifndef LIST_OBJECT
+#define LIST_OBJECT
 #include <fstream>
-#include "human_operator.h"
+#include <iostream>
+#include <string>
 #include "human_object.h"
-#include "side_functions.h"
 using namespace std;
+
 class listOD{
 	class listEL{
 	public:
@@ -22,8 +21,9 @@ public:
 	bool loginFun();
 	~listOD();
 	listEL* append(Person&);
+	listEL* append();
 	listEL* search(string&);
-	fstream& load(fstream&);
+	fstream& load(fstream&, string&);
 	friend ostream& operator<<(ostream&, listOD&);
 	friend istream& operator>>(istream&, listOD&);
 	friend ostream& operator>>(fstream&, listOD&);
@@ -58,44 +58,37 @@ listOD::listEL* listOD::append(Person &pattern){  //for indirect input (with Per
 	return newel;
 }
 
-ostream& operator<<(ostream &out, listOD &element){ //output - whole list
+fstream& listOD::load(fstream &file, string &dir){ //getting data from non-empty file
+	string str;
+	listEL *help = new listEL;
+	file.open(dir, ios::in);
+	while(!file.eof()){
+		getline(file, help->value.first_name);
+		getline(file, help->value.last_name);
+		file.get(help->value.sex);
+		file.get();
+		getline(file, help->value.login);
+		getline(file, help->value.password);
+		getline(file, str);
+		help->value.birth.day = stoi(str,nullptr,10);
+		getline(file, str);
+		help->value.birth.month = stoi(str,nullptr,10);
+		getline(file, str);
+		help->value.birth.year = stoi(str,nullptr,10);
+		help->next = head->next;
+		head->next = help;
+		help = new listEL;
+	}
+	file.close();
+	return file;
+}
+
+/*ostream& operator<<(ostream &out, listOD &element){ //output - whole list
 	listOD::listEL *help = element.head->next;
 	while(help){
 		out << help->value;
 		help = help->next;
 	}
 	return out;
-}
-
-fstream& listOD::load(fstream &file){ //getting data from non-empty file
-	listEL *help;
-	while(!file.eof()){
-		getline(file, help->value.first_name);
-		getline(file, help->value.last_name);
-		file >> help->value.sex;
-		getline(file, help->value.login);
-		getline(file, help->value.password);
-		file >> help->value.birth.day;
-		file >> help->value.birth.month;
-		file >> help->value.birth.year;
-		help->next = head->next;
-		head->next = help;
-		help = new listEL;
-	}
-	return file;
-}
-
-istream& operator>>(istream &in, listOD &element){  //for direct input (through the console)
-	listOD::listEL *newel = new listOD::listEL;
-	getFirstName(in, newel->value);
-	getLastName(in, newel->value);
-	getSex(in, newel->value);
-	getLogin(in, newel->value);
-	getPassword(in, newel->value);
-	getDate(in, newel->value);
-	newel->next = element.head->next;
-	element.head->next = newel;
-	return in;
-}
-
+}*/
 #endif

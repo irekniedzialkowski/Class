@@ -1,9 +1,9 @@
 #ifndef LIST_SIDE_FUNCTIONS_H
 #define LIST_SIDE_FUNCTIONS_H
-#include "list.h"
-#include "side_functions.h"
 #include <iostream>
 #include <string>
+#include "list_object.h"
+#include "side_functions.h"
 using namespace std;
 listOD::listEL* listOD::checkLogin(string loginCheck){
 	listEL *pointhelp = head->next;
